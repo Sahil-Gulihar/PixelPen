@@ -29,7 +29,7 @@ const Output = () => {
           outputRef.current.value = textOutput;
         }
       },
-      error: (jqXHR: any, textStatus: any, errorThrown: any) => {
+      error: (jqXHR: any) => {
         alert(jqXHR.responseText);
       },
     });
