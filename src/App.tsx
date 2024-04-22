@@ -7,7 +7,14 @@ const Output = () => {
 
   const handleConversion = () => {
     const formData = new FormData();
-    const imageFile = $("#imageFile")[0].files[0];
+    const imageFileInput = $("#imageFile")[0] as HTMLInputElement;
+    const imageFile = imageFileInput.files?.[0];
+
+    if (!imageFile) {
+      alert("Please select an image file.");
+      return;
+    }
+
     formData.append("image", imageFile);
 
     $.ajax({
@@ -25,6 +32,7 @@ const Output = () => {
           (acc: string, item: { text: string }) => acc + item.text + " ",
           ""
         );
+
         if (outputRef.current) {
           outputRef.current.value = textOutput;
         }
@@ -40,12 +48,11 @@ const Output = () => {
       <div className="flex">
         {/* <img
           src="https://i.imgur.com/oboGhuE.png"
-          className="w-30 h-20  bg-gray-800 pt-4"
+          className="w-30 h-20 bg-gray-800 pt-4"
           alt="Heya"
         /> */}
         <h1 className="text-center text-3xl p-8">Pixel Pen</h1>
       </div>
-
       <div className="flex justify-between w-[20vw] border-black p-8">
         <input
           type="file"
@@ -53,7 +60,6 @@ const Output = () => {
           accept="image/*"
           className="w-48 appearance-none"
         />
-
         <button
           id="convertBtn"
           className="border text-lg px-4 py-2 border-gray-800 rounded-lg bg-white text-gray-900"
